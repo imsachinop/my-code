@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+template <typename T,typename S>
+class mypair{
+    T x;
+    S y;
+    public:
+    void setx(T x){
+        this->x=x;
+    }
+    void sety(S y){
+        this->y=y;
+    }
+    T getx(){
+        return x;
+    }
+    S gety(){
+        return y;
+    }
+
+};
+int main(){
+    mypair<mypair<int,int>,int> p1;
+    p1.sety(20);
+    mypair<int,int>p2;
+    p2.setx(10);
+    p2.sety(11);
+    p1.setx(p2);
+    cout<<p1.getx().getx()<<" "<<p1.getx().gety()<<" "<<p1.gety();
+}
