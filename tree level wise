@@ -1,0 +1,74 @@
+#include <bits/stdc++.h>
+using namespace std;
+template <typename T>
+class Treenode{
+    public:
+    T data;
+    vector<Treenode<T>*>children;
+    Treenode(T data){
+        this->data = data;
+    }
+};
+void printtree(Treenode<int> * root){
+    if(root==NULL){
+        return;
+    }
+    cout<<root->data<<":";
+    for(int i=0;i<root->children.size();i++){
+        cout<<root->children[i]->data<<",";
+    }
+    cout<<endl;
+    for(int i=0;i<root->children.size();i++){
+        printtree(root->children[i]);
+    }
+}
+Treenode<int> *takeinput(){
+    int rootnode;
+    cout<<"enter rootnode: "<<endl;
+    cin>>rootnode;
+    Treenode<int> *root = new Treenode(rootnode);
+    int n;
+    cout<<"enter child of the "<<rootnode<<endl;
+    cin>>n;
+    for(int i=0;i<n;i++){
+      Treenode<int>*child = takeinput();
+      root->children.push_back(child);
+    }
+    return root;
+}
+Treenode<int>* takeinputlevelnodes(){
+    int rootdata;
+    cout<<"enter rootdata: "<<endl;
+    cin>>rootdata;
+    Treenode<int> *root = new Treenode(rootdata);
+    queue<Treenode<int>*> pendingnodes;
+    pendingnodes.push(root);
+    while(pendingnodes.size()!=0){
+        Treenode<int> *front = pendingnodes.front();
+        pendingnodes.pop();
+        int numchild;
+        cout<<"enter num of children of "<<front->data<<endl;
+        cin>>numchild;
+        for(int i =0;i<numchild;i++){
+            int childdata;
+             cout<<"enter "<<i<<"th child of the"<<front->data<<endl;
+             cin>>childdata;
+             Treenode<int> *child = new Treenode(childdata);
+             front->children.push_back(child);
+             pendingnodes.push(child);
+        }
+    }
+    return root;
+}
+int main(){
+    Treenode<int> *root = takeinputlevelnodes();
+    printtree(root);
+    /*
+    Treenode<int>* root = new Treenode(1);
+    Treenode<int>* node1 = new Treenode(2);
+    Treenode<int>* node2 = new Treenode(3);
+    root->children.push_back(node1);
+    root->children.push_back(node2);
+    printtree(root);
+    */
+}
