@@ -1,0 +1,95 @@
+#include <iostream>
+using namespace std;
+
+class node {
+public:
+    int data;
+    node *next;
+
+    node(int value) {
+        this->data = value;
+        this->next = nullptr;
+    }
+};
+
+class stack {
+    node *head;
+    int size;
+
+public:
+    stack() {
+        head = nullptr;
+        size = 0;
+    }
+
+    void push(int value) {
+        node *newnode = new node(value);
+        if (head == nullptr) {
+            head = newnode;
+        } else {
+            newnode->next = head;
+            head = newnode;
+        }
+        size++;
+    }
+
+    void display() {
+        node *temp = head;
+        while (temp != nullptr) {
+            cout << temp->data << " ";
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+
+    void pop() {
+        if (head == nullptr) {
+            cout << "Stack is empty, nothing to pop!" << endl;
+            return;
+        }
+        int x = head->data;
+        head = head->next;
+        cout << "Popped element is " << x << endl;
+        size--;
+    }
+
+    void top() {
+        if (head != nullptr) {
+            cout << head->data;
+        } else {
+            cout << "Stack is empty!";
+        }
+    }
+
+    void getsize() {
+        cout << "The size of the current stack is: " << size << endl;
+    }
+
+    bool isempty() {
+        if (head == nullptr) {
+            cout << "Stack is empty" << endl;
+            return true;
+        } else {
+            cout << "Stack has elements and it is not empty" << endl;
+            return false;
+        }
+    }
+};
+
+int main() {
+    stack s1;
+    s1.push(10);
+    s1.push(20);
+    s1.push(30);
+    s1.display();
+    s1.pop();
+    s1.display();
+    cout << "Top element of the stack is: ";
+    s1.top();
+    cout << endl;
+    s1.getsize();
+    cout << endl;
+    s1.isempty();
+
+    return 0;
+}
