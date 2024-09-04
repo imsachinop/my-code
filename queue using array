@@ -1,0 +1,86 @@
+#include <iostream>
+using namespace std;
+
+template <typename T>
+class QueueUsingArray {
+    T *data;
+    int frontindex;
+    int nextindex;
+    int size;
+    int capacity;
+
+public:
+    QueueUsingArray(int s) {
+        data = new T[s];
+        frontindex = -1;
+        nextindex = 0;
+        size = 0;
+        capacity = s;
+    }
+
+    int getsize() {
+        return size;
+    }
+
+    bool isempty() {
+        return size == 0;
+    }
+
+    void enqueue(T element) {
+        if (size == capacity) {
+            cout << "Queue is full" << endl;
+            return;
+        }
+        data[nextindex] = element;
+        nextindex = (nextindex + 1) % capacity;
+        size++;
+        if (frontindex == -1) {
+            frontindex = 0;
+        }
+    }
+
+    T dequeue() {
+        if (size == 0) {
+            cout << "Queue is empty" << endl;
+            return 0;  // Return a default value or throw an exception
+        }
+        T temp = data[frontindex];
+        frontindex = (frontindex + 1) % capacity;
+        size--;
+        if (size == 0) {
+            frontindex = -1;
+            nextindex = 0;
+        }
+        return temp;
+    }
+
+    void display() {
+        if (isempty()) {
+            cout << "Queue is empty" << endl;
+            return;
+        }
+        int i = frontindex;
+        for (int count = 0; count < size; count++) {
+            cout << data[i] << " ";
+            i = (i + 1) % capacity;
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    QueueUsingArray<int> s1(5);
+    s1.enqueue(10);
+    s1.enqueue(20);
+    s1.enqueue(30);
+    s1.enqueue(40);
+    s1.enqueue(50);
+    s1.display();
+    s1.dequeue();
+    s1.dequeue();
+    s1.dequeue();
+    s1.display();
+    cout << "Current size of the queue: " << s1.getsize() << endl;
+
+    return 0;
+}
