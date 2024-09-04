@@ -1,0 +1,90 @@
+#include <iostream>
+using namespace std;
+
+template <typename T>
+class node {
+public:
+    T data;
+    node *next;
+
+    node(T data) {
+        this->data = data;
+        this->next = nullptr;
+    }
+};
+
+template <typename T>
+class stack {
+    node<T> *head;
+    int size;
+
+public:
+    stack() {
+        size = 0;
+        head = nullptr;
+    }
+
+    int getsize() {
+        return size;
+    }
+
+    bool isempty() {
+        return size == 0;
+    }
+
+    void push(T value) {
+        node<T> *newnode = new node<T>(value);
+        if (head == nullptr) {
+            head = newnode;
+        } else {
+            newnode->next = head;
+            head = newnode;
+        }
+        size++;
+    }
+
+    T pop() {
+        if (size == 0) {
+            cout << "Stack is empty, cannot pop!" << endl;
+            return 0;  // Return a default value or throw an exception
+        }
+        T val = head->data;
+        head = head->next;
+        size--;
+        return val;
+    }
+
+    T top() {
+        if (size == 0) {
+            cout << "Stack is empty, no top element!" << endl;
+            return 0;  // Return a default value or throw an exception
+        } else {
+            return head->data;
+        }
+    }
+
+    void display() {
+        node<T> *temp = head;
+        while (temp != nullptr) {
+            cout << temp->data << " ";
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    stack<int> s1;
+    s1.push(20);
+    s1.push(40);
+    s1.push(30);
+    s1.push(50);
+    s1.display();
+    s1.pop();
+    s1.display();
+    cout << "Current size of the stack is: " << s1.getsize() << endl;
+    cout << "Is the stack empty now: " << (s1.isempty() ? "Yes" : "No") << endl;
+    cout << "Top element of the stack is: " << s1.top() << endl;
+
+    return 0;
+}
